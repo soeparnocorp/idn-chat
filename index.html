@@ -1,29 +1,94 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IDN Chat</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IDN Social Universe</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<canvas id="bg-canvas"></canvas><header>
-  <div class="logo">IDN Social</div>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">About</a>
-    <a href="#">Help</a>
-  </nav>
-</header><main>
-  <section class="login-section">
-    <div class="login-box">
-      <h2>Welcome to IDN Social Universe</h2>
-      <p>Step inside a social world that reacts to your presence.</p>
-      <input type="email" placeholder="Enter your email">
-      <input type="password" placeholder="Enter password">
-      <button id="login-btn">Enter Universe</button>
+  <!-- Canvas untuk animasi background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">IDN</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Discover</a>
+      <a href="#">Stories</a>
+      <a href="#">Login</a>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <main>
+    <section class="login-section">
+      <div class="login-box">
+        <h2>Welcome to IDN Universe</h2>
+        <p>Connect. Expand. Exist in the New Social Universe.</p>
+        <input type="email" placeholder="Email" id="email">
+        <input type="password" placeholder="Password" id="password">
+        <button id="login-btn">Enter the Universe</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- SOCIAL CLOUD SECTION -->
+  <section class="social-cloud">
+    <h3>People are Everywhere</h3>
+    <div class="cloud-container">
+      <!-- Silhouettes & particles akan digenerate via JS -->
     </div>
   </section>
-</main><footer>
-  <p>&copy; 2025 IDN Chat Social • <a href="#">Privacy</a> • <a href="#">Terms</a></p>
-</footer><script src="login.js"></script></body>
+
+  <!-- GRID OF CONNECTIONS -->
+  <section class="connections-grid">
+    <h3>The Grid of Connections</h3>
+    <div class="bubble-container">
+      <div class="bubble">Friends</div>
+      <div class="bubble">Chat Room</div>
+      <div class="bubble">Discover</div>
+      <div class="bubble">AI Companion</div>
+      <div class="bubble">Marketplace</div>
+      <div class="bubble">Stories</div>
+    </div>
+  </section>
+
+  <!-- SOCIAL TEMPLE SECTION -->
+  <section class="social-temple">
+    <h3>Your Future Home</h3>
+    <div class="temple-container">
+      <!-- Kuil futuristik dengan efek kaca & avatar hologram -->
+    </div>
+  </section>
+
+  <!-- LIVE FEED SECTION -->
+  <section class="live-feed">
+    <h3>Live World Feed</h3>
+    <div class="feed-container">
+      <!-- Feed card interaktif akan muncul via JS -->
+    </div>
+  </section>
+
+  <!-- TUNNEL LOGIN SECTION -->
+  <section class="login-tunnel">
+    <h3>Enter the Portal</h3>
+    <button id="portal-btn">Login Now</button>
+    <div class="tunnel-effect"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 IDN Social Universe • All Rights Reserved</p>
+    <div class="footer-icons">
+      <span class="icon">⚡</span>
+      <span class="icon">🌐</span>
+      <span class="icon">💬</span>
+    </div>
+  </footer>
+
+  <!-- Script untuk interaksi & animasi -->
+  <script src="script.js"></script>
+</body>
 </html>
