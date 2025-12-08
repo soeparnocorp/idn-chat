@@ -4,60 +4,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IDN Chat</title>
 <style>
-  /* Basic reset */
-  * { margin: 0; padding: 0; box-sizing: border-box; }html, body { height: 100%; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-
-body {
-display: flex;
-justify-content: center;
-align-items: center;
-background: #fff;
-overflow: hidden;
-}
-
-/* Animated gradient background (subtle moving blobs) */
-body::before {
-content: "";
-position: absolute;
-top: -50%;
-left: -50%;
-width: 200%;
-height: 200%;
-background: radial-gradient(circle at 30% 30%, #ffe8e0, transparent 25%),
-radial-gradient(circle at 70% 70%, #d0f0ff, transparent 25%);
-animation: bgMove 20s linear infinite;
-z-index: -1;
-}
-
-@keyframes bgMove {
-0% { transform: rotate(0deg) translate(0,0); }
-50% { transform: rotate(180deg) translate(50px, -50px); }
-100% { transform: rotate(360deg) translate(0,0); }
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; font-family: 'Segoe UI', Roboto, sans-serif; overflow: hidden; background: #fff; }/* Particle canvas background */
+#bgCanvas { position: absolute; top:0; left:0; width:100%; height:100%; z-index: -1; }
 
 .container {
 display: flex;
 width: 90%;
-max-width: 900px;
-background: rgba(255,255,255,0.95);
-border-radius: 16px;
-box-shadow: 0 12px 40px rgba(0,0,0,0.1);
-overflow: hidden;
+max-width: 1000px;
+margin: auto;
+height: 80vh;
+align-items: center;
+justify-content: center;
+position: relative;
 }
 
 .left-panel {
 flex: 1;
-background: #f5f5f5;
-padding: 3rem;
 display: flex;
 flex-direction: column;
 justify-content: center;
+padding: 3rem;
+}
+
+.logo {
+font-size: 3rem;
+font-weight: bold;
+color: #111;
+margin-bottom: 1rem;
 }
 
 .left-panel h1 {
-font-size: 2.5rem;
-color: #111;
+font-size: 2.2rem;
 margin-bottom: 1rem;
+color: #111;
 }
 
 .left-panel p {
@@ -68,11 +48,11 @@ line-height: 1.5;
 
 .right-panel {
 flex: 1;
-padding: 3rem;
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+padding: 3rem;
 }
 
 .right-panel input {
@@ -93,43 +73,107 @@ background: #111;
 color: #fff;
 font-weight: bold;
 cursor: pointer;
-transition: background 0.3s;
+transition: background 0.3s, transform 0.2s;
 }
 
 .right-panel button:hover {
 background: #333;
+transform: scale(1.05);
 }
 
 @media(max-width: 768px) {
 .container { flex-direction: column; }
-.left-panel, .right-panel { width: 100%; padding: 2rem; }
-.right-panel input { width: 100%; }
-.right-panel button { width: 100%; }
+.right-panel input, .right-panel button { width: 100%; }
 }
 </style>
 
 </head>
-<body>
-  <div class="container">
-    <div class="left-panel">
-      <h1>Welcome to IDN Chat</h1>
-      <p>Experience a fresh, lively chat environment. Secure, fast, and designed for real-time conversations. Log in and start connecting with your community!</p>
-    </div>
-    <div class="right-panel">
-      <input type="email" id="email" placeholder="Enter your email" />
-      <button id="loginBtn">Login / Get OTP</button>
-    </div>
-  </div><script>
+<body><canvas id="bgCanvas"></canvas>
+
+<div class="container">
+  <div class="left-panel">
+    <div class="logo">IDN Chat</div>
+    <h1>Connect with your community</h1>
+    <p>Visualize your network. Chat instantly. Experience real-time connection with every user online.</p>
+  </div>
+  <div class="right-panel">
+    <input type="email" id="email" placeholder="Enter your email" />
+    <button id="loginBtn">Login / Get OTP</button>
+  </div>
+</div><script>
+// ====== Particle animation for "user connected" visualization ======
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const particleCount = 60;
+const particles = [];
+
+class Particle {
+  constructor() {
+    this.x = Math.random()*canvas.width;
+    this.y = Math.random()*canvas.height;
+    this.radius = 4 + Math.random()*3;
+    this.color = "rgba(0,0,0,0.2)";
+    this.vx = (Math.random()-0.5)*0.3;
+    this.vy = (Math.random()-0.5)*0.3;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    if(this.x<0||this.x>canvas.width) this.vx*=-1;
+    if(this.y<0||this.y>canvas.height) this.vy*=-1;
+  }
+}
+
+for(let i=0;i<particleCount;i++){particles.push(new Particle());}
+
+function connectParticles() {
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist<120){
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(0,0,0,0.05)';
+        ctx.lineWidth=1;
+        ctx.moveTo(particles[i].x,particles[i].y);
+        ctx.lineTo(particles[j].x,particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{p.update(); p.draw();});
+  connectParticles();
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ====== Handle login redirect ======
 const loginBtn = document.getElementById("loginBtn");
 const emailInput = document.getElementById("email");
-
-loginBtn.addEventListener("click", () => {
+loginBtn.addEventListener("click",()=>{
   const email = emailInput.value.trim();
-  if (!email) return alert("Please enter your email!");
-
-  // Redirect to Worker A
+  if(!email) return alert("Please enter your email!");
   const workerA = "https://openauth-idn.soeparnocorp.workers.dev/?redirect_uri=https://idn-chat.pages.dev";
   window.location.href = workerA + "&email=" + encodeURIComponent(email);
+});
+
+window.addEventListener("resize",()=>{
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 });
 </script></body>
 </html>
