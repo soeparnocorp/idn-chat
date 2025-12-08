@@ -1,164 +1,317 @@
-/* Reset & base */
-
+/* ===========================
+   RESET & BASE
+=========================== */
 * {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 body, html {
-width: 100%;
-height: 100%;
-overflow: hidden;
-background: #fff;
-color: #111;
-position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background: #ffffff;
+  color: #111111;
 }
 
-/* Canvas behind all content */
+/* ===========================
+   CANVAS BACKGROUND
+=========================== */
 #bg-canvas {
-position: fixed;
-top: 0;
-left: 0;
-z-index: -1;
-width: 100%;
-height: 100%;
-pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
-/* Header */
+/* ===========================
+   HEADER
+=========================== */
 header {
-position: fixed;
-top: 0;
-width: 100%;
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 15px 50px;
-background: rgba(255, 255, 255, 0.9);
-box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-z-index: 10;
+  width: 100%;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(5px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 header .logo {
-font-weight: 700;
-font-size: 1.8rem;
-color: #222;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #222;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 header nav a {
-margin-left: 25px;
-text-decoration: none;
-color: #222;
-font-weight: 500;
-transition: color 0.3s ease;
+  margin-left: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  color: #222;
+  transition: color 0.3s ease;
 }
 
 header nav a:hover {
-color: #0051c3;
+  color: #ff4081;
 }
 
-/* Main Login Section */
-main {
-width: 100%;
-height: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-}
-
+/* ===========================
+   HERO / LOGIN SECTION
+=========================== */
 .login-section {
-width: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  text-align: center;
 }
 
 .login-box {
-width: 350px;
-padding: 40px 30px;
-background: rgba(255,255,255,0.95);
-border-radius: 15px;
-box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-display: flex;
-flex-direction: column;
-align-items: center;
-text-align: center;
-backdrop-filter: blur(5px);
-animation: fadeIn 1.5s ease forwards;
+  background: rgba(255,255,255,0.9);
+  padding: 60px 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+  max-width: 400px;
 }
 
 .login-box h2 {
-font-size: 1.8rem;
-margin-bottom: 10px;
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  color: #111;
 }
 
 .login-box p {
-font-size: 0.95rem;
-margin-bottom: 25px;
-color: #444;
+  font-size: 1rem;
+  margin-bottom: 30px;
+  color: #444;
 }
 
 .login-box input {
-width: 100%;
-padding: 12px 15px;
-margin-bottom: 15px;
-border: 1px solid #ccc;
-border-radius: 8px;
-outline: none;
-font-size: 1rem;
-transition: border 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
 .login-box input:focus {
-border-color: #0051c3;
-box-shadow: 0 0 8px rgba(0,81,195,0.3);
+  border-color: #ff4081;
+  outline: none;
+  box-shadow: 0 0 10px rgba(255,64,129,0.3);
 }
 
-#login-btn {
-width: 100%;
-padding: 12px 0;
-background: #0051c3;
-color: #fff;
-font-weight: 600;
-border: none;
-border-radius: 8px;
-cursor: pointer;
-transition: background 0.3s ease, transform 0.2s ease;
+.login-box button {
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff4081, #ff8c00);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-#login-btn:hover {
-background: #003d99;
-transform: translateY(-2px);
+.login-box button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px rgba(255,64,129,0.4);
 }
 
-/* Footer */
+/* ===========================
+   SOCIAL CLOUD
+=========================== */
+.social-cloud {
+  padding: 100px 50px;
+  position: relative;
+  text-align: center;
+  background: linear-gradient(120deg, #f0f0f0, #e0e0e0);
+}
+
+.social-cloud h3 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #111;
+}
+
+.cloud-container {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===========================
+   GRID OF CONNECTIONS
+=========================== */
+.connections-grid {
+  padding: 120px 50px;
+  text-align: center;
+  background: #fff;
+}
+
+.connections-grid h3 {
+  font-size: 2rem;
+  margin-bottom: 50px;
+}
+
+.bubble-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.bubble {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff4081, #ff8c00);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.bubble:hover {
+  transform: scale(1.2);
+  box-shadow: 0 10px 30px rgba(255,64,129,0.5);
+}
+
+/* ===========================
+   SOCIAL TEMPLE
+=========================== */
+.social-temple {
+  padding: 120px 50px;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.social-temple h3 {
+  font-size: 2rem;
+  margin-bottom: 60px;
+}
+
+.temple-container {
+  width: 100%;
+  height: 400px;
+  background: rgba(0,0,0,0.05);
+  border-radius: 20px;
+  position: relative;
+}
+
+/* ===========================
+   LIVE FEED
+=========================== */
+.live-feed {
+  padding: 100px 50px;
+  background: #fff;
+}
+
+.live-feed h3 {
+  font-size: 2rem;
+  margin-bottom: 50px;
+}
+
+.feed-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* ===========================
+   LOGIN TUNNEL
+=========================== */
+.login-tunnel {
+  padding: 150px 50px;
+  text-align: center;
+  position: relative;
+  background: #111;
+  color: #fff;
+  overflow: hidden;
+}
+
+.login-tunnel h3 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #fff;
+}
+
+#portal-btn {
+  padding: 20px 40px;
+  font-size: 1.2rem;
+  border-radius: 15px;
+  border: none;
+  background: linear-gradient(90deg, #00f0ff, #ff00ff);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#portal-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 30px rgba(0,255,255,0.5);
+}
+
+.tunnel-effect {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 200%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.2) 70%);
+  transform: translateX(-50%) rotate(45deg);
+  animation: tunnelRotate 15s linear infinite;
+  z-index: 0;
+}
+
+@keyframes tunnelRotate {
+  0% { transform: translateX(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* ===========================
+   FOOTER
+=========================== */
 footer {
-position: fixed;
-bottom: 0;
-width: 100%;
-padding: 15px 50px;
-text-align: center;
-font-size: 0.8rem;
-color: #555;
-background: rgba(255,255,255,0.9);
-box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+  padding: 50px;
+  background: #111;
+  color: #fff;
+  text-align: center;
+  position: relative;
 }
 
-footer a {
-text-decoration: none;
-color: #222;
-margin: 0 5px;
-transition: color 0.3s ease;
+.footer-icons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }
 
-footer a:hover {
-color: #0051c3;
+.footer-icons .icon {
+  font-size: 1.5rem;
+  animation: pulse 2s infinite;
 }
 
-/* Animations */
-@keyframes fadeIn {
-from {opacity: 0; transform: translateY(30px);}
-to {opacity: 1; transform: translateY(0);}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
 }
