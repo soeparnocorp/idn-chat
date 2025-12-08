@@ -1,57 +1,99 @@
-/* main.js */
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 
 let width = canvas.width = window.innerWidth;
 let height = canvas.height = window.innerHeight;
 
-const hexagons = [];
-const HEX_COUNT = 80;
-
-for(let i=0;i<HEX_COUNT;i++){
-hexagons.push({
-x: Math.random()*width,
-y: Math.random()*height,
-size: 20 + Math.random()*30,
-dx: (Math.random()-0.5)*0.3,
-dy: (Math.random()-0.5)*0.3,
-angle: Math.random()Math.PI2
+window.addEventListener('resize', () => {
+width = canvas.width = window.innerWidth;
+height = canvas.height = window.innerHeight;
+initParticles();
 });
+
+const particleCount = 80;
+const particles = [];
+
+class Particle {
+constructor() {
+this.reset();
 }
 
-function drawHexagon(x, y, size, angle){
+reset() {
+this.x = Math.random() * width;
+this.y = Math.random() * height;
+this.vx = (Math.random() - 0.5) * 0.8;
+this.vy = (Math.random() - 0.5) * 0.8;
+this.size = Math.random() * 20 + 10;
+this.opacity = Math.random() * 0.5 + 0.2;
+}
+
+update() {
+this.x += this.vx;
+this.y += this.vy;
+
+if (this.x < -50 || this.x > width + 50 || this.y < -50 || this.y > height + 50) {
+  this.reset();
+}
+
+}
+
+draw(ctx) {
 ctx.save();
-ctx.translate(x, y);
-ctx.rotate(angle);
+ctx.globalAlpha = this.opacity;
+ctx.strokeStyle = '#222';
+ctx.lineWidth = 2;
 ctx.beginPath();
-for(let i=0;i<6;i++){
-const a = Math.PI/3i;
-ctx.lineTo(sizeMath.cos(a), size*Math.sin(a));
+for (let i = 0; i < 6; i++) {
+const angle = Math.PI / 3 * i;
+const x = this.x + this.size * Math.cos(angle);
+const y = this.y + this.size * Math.sin(angle);
+if (i === 0) ctx.moveTo(x, y);
+else ctx.lineTo(x, y);
 }
 ctx.closePath();
-ctx.strokeStyle = 'rgba(0,0,0,0.2)';
 ctx.stroke();
 ctx.restore();
 }
+}
 
-function animate(){
-ctx.clearRect(0,0,width,height);
-hexagons.forEach(h=>{
-h.x += h.dx;
-h.y += h.dy;
-h.angle += 0.001;
-if(h.x>width) h.x=0;
-if(h.x<0) h.x=width;
-if(h.y>height) h.y=0;
-if(h.y<0) h.y=height;
-drawHexagon(h.x, h.y, h.size, h.angle);
+function initParticles() {
+particles.length = 0;
+for (let i = 0; i < particleCount; i++) {
+particles.push(new Particle());
+}
+}
+
+function animate() {
+ctx.clearRect(0, 0, width, height);
+particles.forEach(p => {
+p.update();
+p.draw(ctx);
 });
 requestAnimationFrame(animate);
 }
 
+// Interactive hover effect
+canvas.addEventListener('mousemove', e => {
+particles.forEach(p => {
+const dx = p.x - e.clientX;
+const dy = p.y - e.clientY;
+const dist = Math.sqrt(dx * dx + dy * dy);
+if (dist < 100) {
+p.vx += dx * 0.0005;
+p.vy += dy * 0.0005;
+}
+});
+});
+
+initParticles();
 animate();
 
-window.addEventListener('resize', ()=>{
-width = canvas.width = window.innerWidth;
-height = canvas.height = window.innerHeight;
+// Optional: simulate “user echo” effect when typing in input
+const inputs = document.querySelectorAll('input');
+inputs.forEach(input => {
+input.addEventListener('input', () => {
+particles.forEach(p => {
+p.opacity = Math.min(p.opacity + 0.05, 0.9);
+});
+});
 });
