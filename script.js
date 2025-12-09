@@ -61,7 +61,7 @@ animate();
 
 // ===== PORTAL BUTTON =====
 const portalBtn = document.getElementById("portal-btn");
-const encodedLink = btoa("https://idn-chat.pages.dev/folder/"); // Base64
+const encodedLink = btoa("https://idn-chat.pages.dev/log/"); // Base64
 
 portalBtn.addEventListener("click", ()=>{
   const decoded = atob(encodedLink);
