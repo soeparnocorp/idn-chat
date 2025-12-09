@@ -3,92 +3,164 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IDN Social Universe</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>IDN Chat</title>
+  <style>
+    /* ===========================
+       RESET & BASE
+    =========================== */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
+    body, html { width:100%; height:100%; overflow-x:hidden; background:#111; color:#fff; }
+
+    /* ===========================
+       CANVAS BACKGROUND
+    =========================== */
+    #bg-canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
+
+    /* ===========================
+       HEADER
+    =========================== */
+    header { width:100%; padding:20px 50px; display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); position:sticky; top:0; z-index:1000; }
+    header .logo { font-size:2rem; font-weight:bold; color:#0ff; letter-spacing:2px; }
+    header nav a { margin-left:30px; text-decoration:none; font-weight:500; color:#0ff; transition:color 0.3s ease; }
+    header nav a:hover { color:#ff4081; }
+
+    /* ===========================
+       HERO / PORTAL
+    =========================== */
+    .hero-section { display:flex; justify-content:center; align-items:center; height:100vh; text-align:center; flex-direction:column; }
+    .hero-section h1 { font-size:3rem; margin-bottom:20px; color:#0ff; text-shadow:0 0 10px #0ff; }
+    .hero-section p { font-size:1.2rem; margin-bottom:40px; color:#aaa; }
+    #portal-btn { padding:20px 50px; font-size:1.5rem; border-radius:15px; border:none; background:linear-gradient(90deg,#00f0ff,#ff00ff); color:#fff; cursor:pointer; transition:all 0.3s ease; box-shadow:0 0 20px rgba(0,255,255,0.6); }
+    #portal-btn:hover { transform:scale(1.1); box-shadow:0 0 80px rgba(0,255,255,0.8); }
+
+    /* ===========================
+       PREVIEW CHAT BUBBLES
+    =========================== */
+    .preview-chat { position:absolute; bottom:50px; left:50%; transform:translateX(-50%); display:flex; gap:15px; }
+    .bubble-preview { width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg,#ff4081,#ff8c00); display:flex; justify-content:center; align-items:center; color:#fff; font-weight:bold; cursor:pointer; transition:transform 0.4s ease, box-shadow 0.4s ease; }
+    .bubble-preview:hover { transform:scale(1.3); box-shadow:0 10px 30px rgba(255,64,129,0.5); }
+
+    /* ===========================
+       FOOTER
+    =========================== */
+    footer { position:absolute; bottom:0; width:100%; padding:20px; text-align:center; color:#0ff; font-size:0.9rem; }
+
+    /* ===========================
+       FLOATING GLOW PARTICLES
+    =========================== */
+    .glow-particle { position:absolute; border-radius:50%; pointer-events:none; }
+
+    @keyframes glowMove { 0%{transform:translate(0,0);}50%{transform:translate(20px,-20px);}100%{transform:translate(-20px,20px);} }
+  </style>
 </head>
 <body>
-  <!-- Canvas untuk animasi background -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- HEADER -->
   <header>
-    <div class="logo">IDN</div>
+    <div class="logo">IDN Chat</div>
     <nav>
       <a href="#">Home</a>
-      <a href="#">Discover</a>
-      <a href="#">Stories</a>
-      <a href="#">Login</a>
+      <a href="#">About</a>
+      <a href="#">Support</a>
     </nav>
   </header>
 
-  <!-- HERO SECTION -->
-  <main>
-    <section class="login-section">
-      <div class="login-box">
-        <h2>Welcome to IDN Universe</h2>
-        <p>Connect. Expand. Exist in the New Social Universe.</p>
-        <input type="email" placeholder="Email" id="email">
-        <input type="password" placeholder="Password" id="password">
-        <button id="login-btn">Enter the Universe</button>
-      </div>
-    </section>
-  </main>
-
-  <!-- SOCIAL CLOUD SECTION -->
-  <section class="social-cloud">
-    <h3>People are Everywhere</h3>
-    <div class="cloud-container">
-      <!-- Silhouettes & particles akan digenerate via JS -->
+  <section class="hero-section">
+    <h1>Step into IDN Chat</h1>
+    <p>Your gateway to private chat universes.</p>
+    <button id="portal-btn">Enter Chat</button>
+    <div class="preview-chat">
+      <div class="bubble-preview">A</div>
+      <div class="bubble-preview">B</div>
+      <div class="bubble-preview">C</div>
     </div>
   </section>
 
-  <!-- GRID OF CONNECTIONS -->
-  <section class="connections-grid">
-    <h3>The Grid of Connections</h3>
-    <div class="bubble-container">
-      <div class="bubble">Friends</div>
-      <div class="bubble">Chat Room</div>
-      <div class="bubble">Discover</div>
-      <div class="bubble">AI Companion</div>
-      <div class="bubble">Marketplace</div>
-      <div class="bubble">Stories</div>
-    </div>
-  </section>
-
-  <!-- SOCIAL TEMPLE SECTION -->
-  <section class="social-temple">
-    <h3>Your Future Home</h3>
-    <div class="temple-container">
-      <!-- Kuil futuristik dengan efek kaca & avatar hologram -->
-    </div>
-  </section>
-
-  <!-- LIVE FEED SECTION -->
-  <section class="live-feed">
-    <h3>Live World Feed</h3>
-    <div class="feed-container">
-      <!-- Feed card interaktif akan muncul via JS -->
-    </div>
-  </section>
-
-  <!-- TUNNEL LOGIN SECTION -->
-  <section class="login-tunnel">
-    <h3>Enter the Portal</h3>
-    <button id="portal-btn">Login Now</button>
-    <div class="tunnel-effect"></div>
-  </section>
-
-  <!-- FOOTER -->
   <footer>
-    <p>© 2025 IDN Social Universe • All Rights Reserved</p>
-    <div class="footer-icons">
-      <span class="icon">⚡</span>
-      <span class="icon">🌐</span>
-      <span class="icon">💬</span>
-    </div>
+    © 2025 SOEPARNO ENTERPRISE Corp. • All Rights Reserved
   </footer>
 
-  <!-- Script untuk interaksi & animasi -->
-  <script src="script.js"></script>
+  <script>
+    // ===========================
+    // CANVAS HEXAGON BACKGROUND
+    // ===========================
+    const canvas = document.getElementById("bg-canvas");
+    const ctx = canvas.getContext("2d");
+    let w = canvas.width = window.innerWidth;
+    let h = canvas.height = window.innerHeight;
+    window.addEventListener("resize",()=>{ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; });
+
+    const hexGrid=[];
+    const hexSize=40;
+    const hexSpacing=Math.sqrt(3)*hexSize/2;
+    for(let y=0;y<h+hexSize;y+=hexSpacing){
+      for(let x=0;x<w+hexSize;x+=hexSize*1.5){
+        hexGrid.push({x:x+Math.random()*10,y:y+Math.random()*10,angle:Math.random()*Math.PI*2,colorOffset:Math.random()*360});
+      }
+    }
+
+    function animateHex(){
+      ctx.clearRect(0,0,w,h);
+      hexGrid.forEach(hex=>{
+        const {x,y,angle,colorOffset}=hex;
+        const nx=x+Math.cos(angle+performance.now()/5000)*10;
+        const ny=y+Math.sin(angle+performance.now()/5000)*10;
+        drawHex(nx,ny,hexSize,colorOffset);
+      });
+      requestAnimationFrame(animateHex);
+    }
+
+    function drawHex(x,y,size,hue){
+      ctx.beginPath();
+      for(let i=0;i<6;i++){
+        const a=Math.PI/3*i;
+        const px=x+size*Math.cos(a);
+        const py=y+size*Math.sin(a);
+        if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+      }
+      ctx.closePath();
+      ctx.strokeStyle=`hsl(${(hue+performance.now()/50)%360},80%,50%)`;
+      ctx.lineWidth=2;
+      ctx.stroke();
+    }
+    animateHex();
+
+    // ===========================
+    // PORTAL LOGIN ACTION
+    // ===========================
+    const portalBtn=document.getElementById("portal-btn");
+    portalBtn.addEventListener("click",()=>{
+      // redirect ke OpenAuth login
+      window.location.href="https://openauth.idn-chat.pages.dev/login";
+    });
+
+    portalBtn.addEventListener("mouseenter",()=>{
+      portalBtn.style.boxShadow="0 0 80px rgba(0,255,255,0.8)";
+      portalBtn.style.transform="scale(1.2)";
+    });
+    portalBtn.addEventListener("mouseleave",()=>{
+      portalBtn.style.boxShadow="0 0 20px rgba(0,255,255,0.6)";
+      portalBtn.style.transform="scale(1)";
+    });
+
+    // ===========================
+    // FLOATING GLOW PARTICLES
+    // ===========================
+    function createGlowParticles(count=50){
+      for(let i=0;i<count;i++){
+        const p=document.createElement("div");
+        p.className="glow-particle";
+        p.style.width=`${1+Math.random()*3}px`;
+        p.style.height=p.style.width;
+        p.style.background=`hsl(${Math.random()*360},100%,70%)`;
+        p.style.top=`${Math.random()*100}%`;
+        p.style.left=`${Math.random()*100}%`;
+        p.style.opacity=Math.random()*0.6+0.2;
+        p.style.animation=`glowMove ${5+Math.random()*5}s infinite alternate`;
+        document.body.appendChild(p);
+      }
+    }
+    createGlowParticles();
+  </script>
 </body>
 </html>
