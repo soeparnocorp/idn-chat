@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IDN Chat - Gateway</title>
+  <title>IDN Chat Universe</title>
   <style>
     /* ===========================
        RESET & BASE
     =========================== */
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
-    body, html { width:100%; height:100%; overflow:hidden; background:#111; color:#fff; perspective:1000px; }
+    body, html { width:100%; height:100%; overflow:hidden; background:#fff; color:#111; perspective:1000px; }
 
     /* ===========================
        CANVAS FOR 3D CUBE & PARTICLES
@@ -19,24 +19,24 @@
     /* ===========================
        HEADER
     =========================== */
-    header { width:100%; padding:20px 50px; display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); position:sticky; top:0; z-index:1000; }
-    header .logo { font-size:2rem; font-weight:bold; color:#0ff; letter-spacing:2px; }
-    header nav a { margin-left:30px; text-decoration:none; font-weight:500; color:#0ff; transition:color 0.3s ease; }
+    header { width:100%; padding:20px 50px; display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.9); backdrop-filter:blur(5px); position:sticky; top:0; z-index:1000; box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+    header .logo { font-size:2rem; font-weight:bold; color:#111; letter-spacing:2px; }
+    header nav a { margin-left:30px; text-decoration:none; font-weight:500; color:#111; transition:color 0.3s ease; }
     header nav a:hover { color:#ff4081; }
 
     /* ===========================
        HERO / PORTAL
     =========================== */
     .hero-section { position:relative; width:100%; height:100vh; display:flex; justify-content:center; align-items:center; flex-direction:column; text-align:center; }
-    .hero-section h1 { font-size:3rem; margin-bottom:20px; color:#0ff; text-shadow:0 0 15px #0ff; }
-    .hero-section p { font-size:1.2rem; margin-bottom:40px; color:#aaa; }
+    .hero-section h1 { font-size:3rem; margin-bottom:20px; color:#111; text-shadow:0 0 5px rgba(0,0,0,0.1); }
+    .hero-section p { font-size:1.2rem; margin-bottom:40px; color:#555; }
     #portal-btn { padding:20px 50px; font-size:1.5rem; border-radius:15px; border:none; background:linear-gradient(90deg,#00f0ff,#ff00ff); color:#fff; cursor:pointer; transition:all 0.3s ease; box-shadow:0 0 20px rgba(0,255,255,0.6); z-index:10; }
     #portal-btn:hover { transform:scale(1.1); box-shadow:0 0 80px rgba(0,255,255,0.8); }
 
     /* ===========================
        TABLE / GROUND
     =========================== */
-    .table-ground { position:absolute; bottom:0; width:100%; height:150px; background:#fff; z-index:0; }
+    .table-ground { position:absolute; bottom:0; width:100%; height:150px; background:#f0f0f0; z-index:0; }
 
     /* ===========================
        PREVIEW CHAT BUBBLES
@@ -48,7 +48,14 @@
     /* ===========================
        FOOTER
     =========================== */
-    footer { position:absolute; bottom:0; width:100%; padding:20px; text-align:center; color:#0ff; font-size:0.9rem; z-index:10; }
+    footer { position:absolute; bottom:0; width:100%; padding:20px; text-align:center; color:#111; font-size:0.9rem; z-index:10; }
+
+    /* ===========================
+       FLOATING GLOW PARTICLES
+    =========================== */
+    .glow-particle { position:absolute; border-radius:50%; pointer-events:none; }
+
+    @keyframes glowMove {0%{transform:translate(0,0);}50%{transform:translate(20px,-20px);}100%{transform:translate(-20px,20px);}}
   </style>
 </head>
 <body>
@@ -76,17 +83,17 @@
   </section>
 
   <footer>
-    © 2025 IDN Chat • All Rights Reserved
+    © 2025 SOEPARNO ENTERPRISE Corp. • All Rights Reserved
   </footer>
 
   <script>
     // ===========================
     // CANVAS SETUP
     // ===========================
-    const canvas = document.getElementById("bg-canvas");
-    const ctx = canvas.getContext("2d");
-    let w = canvas.width = window.innerWidth;
-    let h = canvas.height = window.innerHeight;
+    const canvas=document.getElementById("bg-canvas");
+    const ctx=canvas.getContext("2d");
+    let w=canvas.width=window.innerWidth;
+    let h=canvas.height=window.innerHeight;
     window.addEventListener("resize",()=>{ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; });
 
     // ===========================
@@ -110,12 +117,15 @@
       const p=c.project();
       ctx.fillStyle="rgba(0,0,0,0.8)";
       ctx.fillRect(p.x-p.size/2,p.y-p.size/2,p.size,p.size);
+      // optional neon outline
+      ctx.strokeStyle="rgba(0,255,255,0.3)";
+      ctx.strokeRect(p.x-p.size/2,p.y-p.size/2,p.size,p.size);
     }
 
     function animateCube(){
       ctx.clearRect(0,0,w,h);
       cubes.forEach(c=>{
-        c.z+=0.5; // move forward slowly
+        c.z+=0.5;
         if(c.z>500) c.z=-500;
         drawCube(c);
       });
@@ -127,17 +137,9 @@
     // PORTAL LOGIN ACTION
     // ===========================
     const portalBtn=document.getElementById("portal-btn");
-    portalBtn.addEventListener("click",()=>{
-      window.location.href="https://openauth.idn-chat.pages.dev/login";
-    });
-    portalBtn.addEventListener("mouseenter",()=>{
-      portalBtn.style.boxShadow="0 0 80px rgba(0,255,255,0.8)";
-      portalBtn.style.transform="scale(1.2)";
-    });
-    portalBtn.addEventListener("mouseleave",()=>{
-      portalBtn.style.boxShadow="0 0 20px rgba(0,255,255,0.6)";
-      portalBtn.style.transform="scale(1)";
-    });
+    portalBtn.addEventListener("click",()=>{ window.location.href="https://openauth-idn.soeparnocorp.workers.dev/"; });
+    portalBtn.addEventListener("mouseenter",()=>{ portalBtn.style.boxShadow="0 0 80px rgba(0,255,255,0.8)"; portalBtn.style.transform="scale(1.2)"; });
+    portalBtn.addEventListener("mouseleave",()=>{ portalBtn.style.boxShadow="0 0 20px rgba(0,255,255,0.6)"; portalBtn.style.transform="scale(1)"; });
 
     // ===========================
     // FLOATING GLOW PARTICLES
